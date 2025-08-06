@@ -9,8 +9,7 @@ books = [
 # data peminjaman
 records = [
     {"isbn":"9786022912828", "status":"Selesai", "tanggal_pinjam":"2025-03-21", "tanggal_kembali":"2025-03-28"},
-    {"isbn":"9786026163905", "status":"Belum", "tanggal_pinjam":"2025-07-22", "tanggal_kembali":""},
-    {"isbn":"9760221241242", "status":"Belum", "tanggal_pinjam":"2025-04-29", "tanggal_kembali":""}
+    {"isbn":"9786026163905", "status":"Belum", "tanggal_pinjam":"2025-07-22", "tanggal_kembali":""}
 ]
 
 def tampilkan_data():
@@ -71,9 +70,12 @@ def tampilkan_belum():
 
 def peminjaman():
     pilihlah = int(input("Buku nomor berapa yang ingin kamu pinjam?: "))
+    tanggalPinjam = str(input('Tanggal berapa? dalam format "YY-MM-DD" '))
     if books[pilihlah-1]["jumlah"] > 0:
         books[pilihlah-1]["terpinjam"] += 1
         books[pilihlah-1]["jumlah"] -= 1
+        BerhasilDiPinjam = {"isbn":books[pilihlah-1]["isbn"], "status":"Belum", "tanggal_pinjam":tanggalPinjam, "tanggal_kembali":""}
+        records.append(BerhasilDiPinjam)
         print("Berhasil di pinjam!")
     else:
         print("Buku tidak tersedia!")
@@ -81,6 +83,10 @@ def peminjaman():
 
 def pengembalian():
     pilihlah2 = int(input("Buku nomor berapa yang ingin kamu kembalikan?: "))
+    tanggalKembalikan = str(input('Tanggal berapa? dalam format "YY-MM-DD" '))
+    tanggalPinjam = records[pilihlah2-1]["tanggal_pinjam"]
+    BerhasilDiPinjam = {"isbn":books[pilihlah2-1]["isbn"], "status":"Selesai", "tanggal_pinjam":tanggalPinjam, "tanggal_kembali":tanggalKembalikan,}
+    records.append(BerhasilDiPinjam)
     if books[pilihlah2-1]["terpinjam"] > 0:
         books[pilihlah2-1]["jumlah"] += 1
         books[pilihlah2-1]["terpinjam"] -= 1
